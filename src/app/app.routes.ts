@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
-import { AppointmentsComponent } from './features/appointments/appointments';
+import { AppointmentsListComponent } from './features/appointments/appointments-list/appointments-list';
+import { AppointmentFormComponent } from './features/appointments/appointment-form/appointment-form';
+import { AppointmentsShellComponent } from './features/appointments/appointments-shell/appointments-shell';
 import { LoginComponent } from './features/auth/login/login';
 import { RegisterComponent } from './features/auth/register/register';
 import { DashboardComponent } from './features/dashboard/dashboard';
@@ -27,7 +29,14 @@ export const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'appointments', component: AppointmentsComponent },
+      {
+        path: 'appointments',
+        component: AppointmentsShellComponent,
+        children: [
+          { path: '', pathMatch: 'full', component: AppointmentsListComponent },
+          { path: 'nueva', component: AppointmentFormComponent },
+        ],
+      },
       { path: 'medications', component: MedicationsComponent },
       { path: 'profile', component: ProfileComponent },
     ],

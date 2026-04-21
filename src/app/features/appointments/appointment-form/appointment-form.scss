@@ -1,0 +1,69 @@
+:host {
+  display: block;
+}
+
+.feature {
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.form-page {
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.form-page__top {
+  margin-bottom: 1.5rem;
+}
+
+.form-page__title {
+  margin: 0.5rem 0 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.back-link {
+  text-decoration: none;
+}
+
+.muted {
+  color: var(--mat-sys-on-surface-variant, #666);
+  margin: 0;
+}
+
+.appt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.full {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.grow {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.time-field {
+  flex: 0 1 10rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.btn-primary-teal {
+  background-color: #00b5a0 !important;
+  color: #fff !important;
+}
