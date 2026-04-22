@@ -1,0 +1,38 @@
+<header class="app-header">
+  <div class="header-container">
+    <!-- Logo -->
+    <div class="logo">
+      <a routerLink="/dashboard" class="logo-link">
+        <span class="logo-icon">+</span>
+        <span class="logo-text">SaludLink</span>
+      </a>
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="nav-menu" [class.open]="menuOpen">
+      <a routerLink="/dashboard" (click)="closeMenu()" class="nav-link">Inicio</a>
+      <a href="#features" (click)="closeMenu()" class="nav-link">Funcionalidades</a>
+      <a href="#plans" (click)="closeMenu()" class="nav-link">Planes</a>
+      <a href="#contact" (click)="closeMenu()" class="nav-link">Contacto</a>
+    </nav>
+
+    <!-- Auth Buttons / User Menu -->
+    <div class="header-actions">
+      <div *ngIf="!isLoggedIn" class="auth-buttons">
+        <a routerLink="/login" class="btn btn-outline">Iniciar sesión</a>
+        <a routerLink="/register" class="btn btn-primary">Empezar gratis</a>
+      </div>
+
+      <div *ngIf="isLoggedIn" class="user-menu">
+        <button class="btn btn-secondary" (click)="logout()">Cerrar sesión</button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="menu-toggle" (click)="toggleMenu()" [class.open]="menuOpen">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>

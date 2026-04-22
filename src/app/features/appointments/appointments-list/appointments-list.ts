@@ -80,6 +80,7 @@ export class AppointmentsListComponent implements OnInit {
   protected readonly appointments = signal<Appointment[]>([]);
   protected readonly isLoading = signal(true);
   protected readonly cancellingId = signal<number | null>(null);
+  protected readonly confirmingId = signal<number | null>(null);
   protected readonly displayedColumns: string[] = [
     'doctorName',
     'specialty',
@@ -158,6 +159,28 @@ export class AppointmentsListComponent implements OnInit {
         },
         error: () => {
           this.snackBar.open('No se pudo cancelar la cita', 'Cerrar', {
+            duration: 4000,
+          });
+        },
+      });
+  }
+
+  protected confirm(appointment: Appointment, event: Event): void {
+    event.stopPropagation();
+    if (!window.confirm('¿Deseas confirmar esta cita?')) {
+      return;
+    }
+    this.confirmingId.set(appointment.id);
+    this.appointmentService
+      .confirmAppointment(appointment.id)
+      .pipe(finalize(() => this.confirmingId.set(null)))
+      .subscribe({
+        next: () => {
+          this.snackBar.open('Cita confirmada', 'Cerrar', { duration: 3000 });
+          this.load();
+        },
+        error: () => {
+          this.snackBar.open('No se pudo confirmar la cita', 'Cerrar', {
             duration: 4000,
           });
         },

@@ -1,4 +1,218 @@
-<section class="feature">
-  <h1>Dashboard</h1>
-  <p>Página principal de SaludLink.</p>
-</section>
+<div class="dashboard-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Tu salud, siempre conectada</h1>
+      <p class="hero-subtitle">
+        Agenda citas, sigue tu tratamiento y cuida tu bienestar desde un solo lugar
+      </p>
+      <div class="hero-buttons">
+        <a routerLink="/appointments" class="btn btn-primary">Agendar cita</a>
+        <button class="btn btn-secondary" onclick="document.querySelector('.contact-section')?.scrollIntoView({behavior: 'smooth'})">
+          Dejame saber
+        </button>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="health-icon">🏥</div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services-section">
+    <h2>Todo lo que necesitas para tu salud</h2>
+    <div class="services-grid">
+      <div *ngFor="let service of services" class="service-card">
+        <div class="service-icon">{{ service.icon }}</div>
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.description }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming Appointments Section -->
+  <section class="appointments-section">
+    <div class="section-header">
+      <h2>Tus próximas citas</h2>
+      <a routerLink="/appointments" class="link-more">Ver todas →</a>
+    </div>
+
+    <div *ngIf="appointmentsLoading" class="loading-state">
+      <p>Cargando citas...</p>
+    </div>
+
+    <div *ngIf="appointmentsError && !appointmentsLoading" class="error-state">
+      <p>Error al cargar citas. Por favor, intenta nuevamente.</p>
+    </div>
+
+    <div *ngIf="!appointmentsLoading && !appointmentsError" class="appointments-list">
+      <div *ngIf="upcomingAppointments.length > 0; else noAppointments">
+        <div *ngFor="let apt of upcomingAppointments" class="appointment-card">
+          <div class="appointment-info">
+            <h4>{{ apt.doctorName }}</h4>
+            <p class="specialty">{{ apt.specialty }}</p>
+            <p class="date-time">📅 {{ formatDate(apt.appointmentDate) }}</p>
+            <p class="modality">{{ apt.modality === 'PRESENCIAL' ? '🏥 Presencial' : '💻 Virtual' }}</p>
+          </div>
+          <div class="appointment-status" [ngClass]="'status-' + apt.status.toLowerCase()">
+            {{ apt.status }}
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noAppointments>
+        <div class="empty-state">
+          <p>No tienes citas próximas</p>
+          <a routerLink="/appointments/nueva" class="btn btn-primary">Agendar una cita</a>
+        </div>
+      </ng-template>
+    </div>
+  </section>
+
+  <!-- Active Medications Section -->
+  <section class="medications-section">
+    <div class="section-header">
+      <h2>Tus medicamentos activos</h2>
+      <a routerLink="/medications" class="link-more">Gestionar →</a>
+    </div>
+
+    <div *ngIf="medicationsLoading" class="loading-state">
+      <p>Cargando medicamentos...</p>
+    </div>
+
+    <div *ngIf="medicationsError && !medicationsLoading" class="error-state">
+      <p>Error al cargar medicamentos. Por favor, intenta nuevamente.</p>
+    </div>
+
+    <div *ngIf="!medicationsLoading && !medicationsError" class="medications-list">
+      <div *ngIf="activeMedications.length > 0; else noMedications">
+        <div *ngFor="let med of activeMedications.slice(0, 3)" class="medication-card">
+          <div class="med-info">
+            <h4>{{ med.name }}</h4>
+            <p class="dosage">💊 {{ med.dosage }}</p>
+            <p class="frequency">⏰ {{ med.frequency }}</p>
+            <p class="dates">{{ formatDate(med.startDate) }} - {{ formatDate(med.endDate) }}</p>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noMedications>
+        <div class="empty-state">
+          <p>No tienes medicamentos activos</p>
+        </div>
+      </ng-template>
+    </div>
+  </section>
+
+  <!-- Plans Section -->
+  <section class="plans-section">
+    <h2>Elige el plan ideal para ti</h2>
+    <div class="plans-grid">
+      <div *ngFor="let plan of plans" class="plan-card" [class.highlighted]="plan.highlighted">
+        <div class="plan-header">
+          <div class="plan-icon">{{ plan.icon }}</div>
+          <h3>{{ plan.name }}</h3>
+        </div>
+
+        <div class="plan-price">
+          <span class="price-value">{{ plan.price }}</span>
+          <span class="price-currency">€</span>
+          <span class="price-period">/mes</span>
+        </div>
+
+        <ul class="plan-features">
+          <li *ngFor="let feature of plan.features">
+            <span class="feature-icon">✓</span>
+            {{ feature }}
+          </li>
+        </ul>
+
+        <button class="btn" [ngClass]="plan.highlighted ? 'btn-primary' : 'btn-secondary'">
+          {{ plan.cta }}
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section">
+    <h2>¿Tienes alguna pregunta?</h2>
+    <div class="contact-container">
+      <form [formGroup]="contactForm" (ngSubmit)="onContactSubmit()" class="contact-form">
+        <div class="form-group">
+          <input
+            type="text"
+            placeholder="Nombre completo"
+            formControlName="name"
+            class="form-input"
+            required
+          />
+          <small *ngIf="contactForm.get('name')?.hasError('required') && contactForm.get('name')?.touched"
+            >El nombre es requerido</small
+          >
+        </div>
+
+        <div class="form-group">
+          <input
+            type="email"
+            placeholder="Correo electrónico"
+            formControlName="email"
+            class="form-input"
+            required
+          />
+          <small *ngIf="contactForm.get('email')?.hasError('required') && contactForm.get('email')?.touched"
+            >El correo es requerido</small
+          >
+          <small *ngIf="contactForm.get('email')?.hasError('email') && contactForm.get('email')?.touched"
+            >El correo no es válido</small
+          >
+        </div>
+
+        <div class="form-group">
+          <textarea
+            placeholder="Tu mensaje"
+            formControlName="message"
+            class="form-input form-textarea"
+            rows="4"
+            required
+          ></textarea>
+          <small *ngIf="contactForm.get('message')?.hasError('required') && contactForm.get('message')?.touched"
+            >El mensaje es requerido</small
+          >
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="contactForm.invalid || contactSubmitting"
+        >
+          {{ contactSubmitting ? 'Enviando...' : 'Enviar consulta' }}
+        </button>
+      </form>
+
+      <div class="contact-info">
+        <div class="contact-item">
+          <span class="contact-icon">📧</span>
+          <p>
+            <strong>Email</strong><br />
+            contacto@saludlink.es
+          </p>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">📱</span>
+          <p>
+            <strong>Teléfono</strong><br />
+            +34 XXX XXX XXX
+          </p>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">⏰</span>
+          <p>
+            <strong>Horario</strong><br />
+            Lun-Vie 9:00 - 19:00
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -61,6 +61,15 @@
             @if (a.status === AppointmentStatus.PENDING) {
               <div class="card-actions">
                 <button
+                  mat-raised-button
+                  type="button"
+                  color="primary"
+                  [disabled]="confirmingId() === a.id"
+                  (click)="confirm(a, $event)"
+                >
+                  Confirmar
+                </button>
+                <button
                   mat-stroked-button
                   type="button"
                   color="warn"
@@ -124,9 +133,21 @@
               <td mat-cell *matCellDef="let a">
                 @if (a.status === AppointmentStatus.PENDING) {
                   <button
+                    mat-raised-button
+                    type="button"
+                    color="primary"
+                    size="small"
+                    [disabled]="confirmingId() === a.id"
+                    (click)="confirm(a, $event)"
+                    style="margin-right: 0.5rem;"
+                  >
+                    Confirmar
+                  </button>
+                  <button
                     mat-stroked-button
                     type="button"
                     color="warn"
+                    size="small"
                     [disabled]="cancellingId() === a.id"
                     (click)="cancel(a, $event)"
                   >

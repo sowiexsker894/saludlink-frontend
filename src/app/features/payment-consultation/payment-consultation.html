@@ -1,0 +1,94 @@
+<div class="payment-consultation">
+  <mat-card class="payment-form">
+    <mat-card-header>
+      <mat-card-title>Pago de Consultas en Línea (HU16)</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="paymentForm" (ngSubmit)="processPayment()">
+        <div class="form-section">
+          <h3>Detalles de la Cita</h3>
+          <p>Consulta: Telemedicina</p>
+          <p><strong>Monto: $99.00</strong></p>
+        </div>
+
+        <div class="form-section">
+          <h3>Método de Pago</h3>
+          <mat-form-field>
+            <mat-label>Selecciona método</mat-label>
+            <mat-select formControlName="paymentMethod">
+              <mat-option value="tarjeta">Tarjeta de Crédito/Débito</mat-option>
+              <mat-option value="billetera">Billetera Digital</mat-option>
+              <mat-option value="transferencia">Transferencia Bancaria</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="paymentForm.get('paymentMethod')?.value === 'tarjeta'" class="card-fields">
+          <mat-form-field>
+            <mat-label>Número de Tarjeta</mat-label>
+            <input matInput formControlName="cardNumber" placeholder="1234 5678 9012 3456" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Nombre del Titular</mat-label>
+            <input matInput formControlName="cardholderName" />
+          </mat-form-field>
+
+          <div class="card-details">
+            <mat-form-field>
+              <mat-label>Vencimiento (MM/YY)</mat-label>
+              <input matInput formControlName="expiryDate" placeholder="MM/YY" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>CVV</mat-label>
+              <input matInput formControlName="cvv" placeholder="123" />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="processing">
+          {{ processing ? 'Procesando...' : 'Realizar Pago' }}
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="payment-history">
+    <mat-card-header>
+      <mat-card-title>Historial de Pagos</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="payments" class="payments-table">
+        <ng-container matColumnDef="appointmentId">
+          <th mat-header-cell *matHeaderCellDef>Cita</th>
+          <td mat-cell *matCellDef="let payment">Cita #{{ payment.appointmentId }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>Monto</th>
+          <td mat-cell *matCellDef="let payment">$ {{ payment.amount }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td mat-cell *matCellDef="let payment">
+            <span [ngClass]="'status-' + payment.status">{{ payment.status }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let payment">
+            <button mat-icon-button (click)="downloadReceipt(payment.id)">
+              <mat-icon>receipt</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

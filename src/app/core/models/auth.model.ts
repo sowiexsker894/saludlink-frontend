@@ -1,12 +1,13 @@
 import { UserRole } from './user.model';
 
 export interface RegisterRequest {
-  firstName: string;
-  lastName: string;
+  name?: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
   password: string;
-  phone: string;
-  role: UserRole;
+  phone?: string;
+  role?: UserRole;
 }
 
 export interface LoginRequest {

@@ -1,0 +1,11 @@
+.payment-consultation { padding: 20px; }
+mat-card { margin-bottom: 20px; }
+.form-section { margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+.form-section h3 { margin-top: 0; color: #14a895; }
+.card-fields { margin-bottom: 20px; }
+.card-details { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+mat-form-field { width: 100%; display: block; margin-bottom: 20px; }
+.payments-table { width: 100%; }
+.status-completado { color: green; font-weight: bold; }
+.status-pendiente { color: orange; font-weight: bold; }
+.status-fallido { color: red; font-weight: bold; }

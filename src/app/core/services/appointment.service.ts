@@ -80,4 +80,11 @@ export class AppointmentService {
       {},
     );
   }
+
+  confirmAppointment(id: number): Observable<Appointment> {
+    return this.http.patch<Appointment>(
+      `${APPOINTMENTS_BASE_URL}/${id}/confirm`,
+      {},
+    );
+  }
 }
