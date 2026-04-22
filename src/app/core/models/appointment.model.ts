@@ -5,6 +5,20 @@ export enum AppointmentStatus {
   COMPLETED = 'COMPLETED',
 }
 
+export const AppointmentModality = {
+  inPerson: 'PRESENCIAL',
+  virtual: 'VIRTUAL',
+} as const;
+
+export type AppointmentModalityValue =
+  (typeof AppointmentModality)[keyof typeof AppointmentModality];
+
+export interface Doctor {
+  id: number;
+  name: string;
+  specialty: string;
+}
+
 export interface Appointment {
   id: number;
   doctorName: string;
