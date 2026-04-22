@@ -1,11 +1,12 @@
-<section class="feature">
+<section class="feature appointments-ui">
   <div class="page__header">
-    <h1 class="page__title">Citas médicas</h1>
-    <a
-      mat-raised-button
-      class="btn-primary-teal"
-      routerLink="/appointments/nueva"
-    >
+    <div>
+      <h1 class="page__title">Citas médicas</h1>
+      <p class="page__lead">
+        Consulta, agenda y administra tus próximas visitas con tu equipo médico.
+      </p>
+    </div>
+    <a mat-raised-button class="btn-sl-primary" routerLink="/appointments/nueva">
       <mat-icon>add</mat-icon>
       Nueva cita
     </a>
@@ -19,11 +20,7 @@
     <mat-card class="empty-card">
       <mat-card-content>
         <p>No tienes citas programadas aún.</p>
-        <a
-          mat-raised-button
-          class="btn-primary-teal"
-          routerLink="/appointments/nueva"
-        >
+        <a mat-raised-button class="btn-sl-primary" routerLink="/appointments/nueva">
           Agendar cita
         </a>
       </mat-card-content>
@@ -63,7 +60,7 @@
                 <button
                   mat-stroked-button
                   type="button"
-                  color="warn"
+                  class="btn-sl-outline btn-sl-outline--danger"
                   [disabled]="cancellingId() === a.id"
                   (click)="cancel(a, $event)"
                 >
@@ -76,7 +73,7 @@
       }
     </div>
   } @else {
-    <mat-card>
+    <mat-card class="appt-panel">
       <mat-card-header>
         <mat-card-title>Mis citas</mat-card-title>
       </mat-card-header>
@@ -126,7 +123,7 @@
                   <button
                     mat-stroked-button
                     type="button"
-                    color="warn"
+                    class="btn-sl-outline btn-sl-outline--danger"
                     [disabled]="cancellingId() === a.id"
                     (click)="cancel(a, $event)"
                   >
