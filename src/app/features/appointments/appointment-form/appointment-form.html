@@ -6,35 +6,33 @@
     <h1 class="form-page__title">Nueva cita</h1>
   </div>
 
-  @if (isLoadingMeta()) {
+  <ng-container *ngIf="isLoadingMeta(); else formTemplate">
     <p class="muted">Cargando especialidades…</p>
-  } @else {
+  </ng-container>
+
+  <ng-template #formTemplate>
     <form class="appt-form" (ngSubmit)="submit()" [formGroup]="form">
       <mat-form-field appearance="outline" class="full">
         <mat-label>Especialidad</mat-label>
         <mat-select formControlName="specialty" required>
-          @for (s of specialties(); track s) {
-            <mat-option [value]="s">{{ s }}</mat-option>
-          }
+          <mat-option *ngFor="let s of specialties()" [value]="s">{{ s }}</mat-option>
         </mat-select>
-        @if (form.get("specialty")?.invalid && form.get("specialty")?.touched) {
-          <mat-error>Selecciona una especialidad</mat-error>
-        }
+        <mat-error *ngIf="form.get('specialty')?.invalid && form.get('specialty')?.touched">
+          Selecciona una especialidad
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full">
         <mat-label>Médico</mat-label>
         <mat-select formControlName="doctorId" required>
-          @for (d of doctors(); track d.id) {
-            <mat-option [value]="d.id">{{ d.name }}</mat-option>
-          }
+          <mat-option *ngFor="let d of doctors()" [value]="d.id">{{ d.name }}</mat-option>
         </mat-select>
-        @if (form.get("specialty")?.value && doctors().length === 0) {
-          <mat-hint>No hay médicos disponibles para esta especialidad</mat-hint>
-        }
-        @if (form.get("doctorId")?.invalid && form.get("doctorId")?.touched) {
-          <mat-error>Selecciona un médico</mat-error>
-        }
+        <mat-hint *ngIf="form.get('specialty')?.value && doctors().length === 0">
+          No hay médicos disponibles para esta especialidad
+        </mat-hint>
+        <mat-error *ngIf="form.get('doctorId')?.invalid && form.get('doctorId')?.touched">
+          Selecciona un médico
+        </mat-error>
       </mat-form-field>
 
       <div class="row">
@@ -46,19 +44,19 @@
             formControlName="date"
             [min]="minDate"
           />
-          <mat-datepicker-toggle matIconSuffix [for]="picker" />
-          <mat-datepicker #picker />
-          @if (form.get("date")?.invalid && form.get("date")?.touched) {
-            <mat-error>Elige una fecha</mat-error>
-          }
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="form.get('date')?.invalid && form.get('date')?.touched">
+            Elige una fecha
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="time-field">
           <mat-label>Hora</mat-label>
           <input matInput type="time" formControlName="time" />
-          @if (form.get("time")?.invalid && form.get("time")?.touched) {
-            <mat-error>Indica la hora</mat-error>
-          }
+          <mat-error *ngIf="form.get('time')?.invalid && form.get('time')?.touched">
+            Indica la hora
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -93,5 +91,5 @@
         </button>
       </div>
     </form>
-  }
+  </ng-template>
 </section>

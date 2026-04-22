@@ -11,9 +11,9 @@
     <!-- Navigation Menu -->
     <nav class="nav-menu" [class.open]="menuOpen">
       <a routerLink="/dashboard" (click)="closeMenu()" class="nav-link">Inicio</a>
-      <a href="#features" (click)="closeMenu()" class="nav-link">Funcionalidades</a>
-      <a href="#plans" (click)="closeMenu()" class="nav-link">Planes</a>
-      <a href="#contact" (click)="closeMenu()" class="nav-link">Contacto</a>
+      <a href="#features" (click)="navigateToSection('features'); closeMenu()" class="nav-link">Funcionalidades</a>
+      <a href="#plans" (click)="navigateToSection('plans'); closeMenu()" class="nav-link">Planes</a>
+      <a href="#contact" (click)="navigateToSection('contact'); closeMenu()" class="nav-link">Contacto</a>
     </nav>
 
     <!-- Auth Buttons / User Menu -->

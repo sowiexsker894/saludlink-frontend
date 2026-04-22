@@ -28,7 +28,7 @@ import { Payment } from '../../core/models/payment.model';
     MatIconModule,
   ],
   templateUrl: './payment-consultation.html',
-  styleUrl: './payment-consultation.scss',
+  styleUrls: ['./payment-consultation.scss'],
 })
 export class PaymentConsultationComponent implements OnInit {
   private paymentService = inject(PaymentService);

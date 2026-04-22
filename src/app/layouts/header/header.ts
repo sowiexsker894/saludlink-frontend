@@ -18,9 +18,8 @@ export class HeaderComponent {
   menuOpen = false;
 
   constructor() {
-    // Check if user is logged in (this should be connected to auth state)
-    const token = localStorage.getItem('authToken');
-    this.isLoggedIn = !!token;
+    // Check if user is logged in using AuthService
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
   toggleMenu(): void {
@@ -29,6 +28,14 @@ export class HeaderComponent {
 
   closeMenu(): void {
     this.menuOpen = false;
+  }
+
+  navigateToSection(section: string): void {
+    void this.router.navigate(['/dashboard'], { fragment: section }).then(() => {
+      setTimeout(() => {
+        document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
+      }, 80);
+    });
   }
 
   logout(): void {

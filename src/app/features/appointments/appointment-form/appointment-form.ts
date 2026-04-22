@@ -1,4 +1,5 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
@@ -41,6 +42,7 @@ import { AppointmentService } from '../../../core/services/appointment.service';
   selector: 'app-appointment-form',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     MatError,
     MatFormField,
@@ -58,7 +60,7 @@ import { AppointmentService } from '../../../core/services/appointment.service';
     RouterLink,
   ],
   templateUrl: './appointment-form.html',
-  styleUrl: './appointment-form.scss',
+  styleUrls: ['./appointment-form.scss'],
 })
 export class AppointmentFormComponent implements OnInit {
   private readonly fb = inject(FormBuilder);

@@ -4,6 +4,7 @@ import { Observable, catchError, map, of } from 'rxjs';
 import {
   Appointment,
   AppointmentRequest,
+  AppointmentStatus,
   Doctor,
 } from '../models/appointment.model';
 
@@ -38,7 +39,9 @@ export class AppointmentService {
   private readonly http = inject(HttpClient);
 
   getAppointmentsByPatient(): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(APPOINTMENTS_BASE_URL);
+    return this.http.get<Appointment[]>(APPOINTMENTS_BASE_URL).pipe(
+      catchError(() => of(this.readLocalAppointments())),
+    );
   }
 
   getSpecialties(): Observable<string[]> {
@@ -71,7 +74,55 @@ export class AppointmentService {
   }
 
   createAppointment(body: AppointmentRequest): Observable<Appointment> {
-    return this.http.post<Appointment>(APPOINTMENTS_BASE_URL, body);
+    return this.http.post<Appointment>(APPOINTMENTS_BASE_URL, body).pipe(
+      catchError(() => {
+        const appointment: Appointment = {
+          id: Date.now(),
+          doctorName: this.getDoctorName(body.doctorId),
+          specialty: this.getDoctorSpecialty(body.doctorId),
+          appointmentDate: body.appointmentDate,
+          modality: body.modality,
+          status: AppointmentStatus.PENDING,
+          notes: body.notes,
+        };
+        this.saveLocalAppointment(appointment);
+        return of(appointment);
+      }),
+    );
+  }
+
+  private readLocalAppointments(): Appointment[] {
+    const raw = localStorage.getItem('saludlink-appointments');
+    if (!raw) {
+      return [];
+    }
+    try {
+      return JSON.parse(raw) as Appointment[];
+    } catch {
+      return [];
+    }
+  }
+
+  private saveLocalAppointment(appointment: Appointment): void {
+    const current = this.readLocalAppointments();
+    localStorage.setItem(
+      'saludlink-appointments',
+      JSON.stringify([appointment, ...current]),
+    );
+  }
+
+  private getDoctorName(doctorId: number): string {
+    return (
+      FALLBACK_DOCTORS.find((doctor) => doctor.id === doctorId)?.name ??
+      'Doctor desconocido'
+    );
+  }
+
+  private getDoctorSpecialty(doctorId: number): string {
+    return (
+      FALLBACK_DOCTORS.find((doctor) => doctor.id === doctorId)?.specialty ??
+      'Especialidad desconocida'
+    );
   }
 
   cancelAppointment(id: number): Observable<Appointment> {

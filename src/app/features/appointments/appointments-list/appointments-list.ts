@@ -62,7 +62,7 @@ import { AppointmentService } from '../../../core/services/appointment.service';
     RouterLink,
   ],
   templateUrl: './appointments-list.html',
-  styleUrl: './appointments-list.scss',
+  styleUrls: ['./appointments-list.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppointmentsListComponent implements OnInit {

@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { delay, tap } from 'rxjs/operators';
 import { AUTH_TOKEN_KEY, AUTH_USER_KEY } from '../constants/storage-keys';
 import { AuthResponse, LoginRequest, RegisterRequest } from '../models/auth.model';
 
@@ -8,18 +8,36 @@ const API_BASE_URL = 'http://localhost:8080/api';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly http = inject(HttpClient);
+  // private readonly http = inject(HttpClient);
 
   login(body: LoginRequest): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(`${API_BASE_URL}/auth/login`, body)
-      .pipe(tap((res) => this.persistAuth(res)));
+    // Mock login for demo purposes
+    const mockResponse: AuthResponse = {
+      token: 'mock-jwt-token-' + Date.now(),
+      email: body.email,
+      role: 'PATIENT',
+      firstName: 'Usuario',
+      lastName: 'Demo'
+    };
+    return of(mockResponse).pipe(
+      delay(1000), // Simulate network delay
+      tap((res) => this.persistAuth(res))
+    );
   }
 
   register(body: RegisterRequest): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(`${API_BASE_URL}/auth/register`, body)
-      .pipe(tap((res) => this.persistAuth(res)));
+    // Mock register for demo purposes
+    const mockResponse: AuthResponse = {
+      token: 'mock-jwt-token-' + Date.now(),
+      email: body.email,
+      role: 'PATIENT',
+      firstName: body.name?.split(' ')[0] || 'Usuario',
+      lastName: body.name?.split(' ').slice(1).join(' ') || 'Demo'
+    };
+    return of(mockResponse).pipe(
+      delay(1000), // Simulate network delay
+      tap((res) => this.persistAuth(res))
+    );
   }
 
   logout(): void {

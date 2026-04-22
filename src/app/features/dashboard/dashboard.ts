@@ -11,7 +11,7 @@ import { Medication } from '../../core/models/medication.model';
   selector: 'app-dashboard',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './dashboard.html',
-  styleUrl: './dashboard.scss',
+  styleUrls: ['./dashboard.scss'],
 })
 export class DashboardComponent implements OnInit {
   private appointmentService = inject(AppointmentService);

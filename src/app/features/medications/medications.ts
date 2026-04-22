@@ -25,7 +25,7 @@ import { MedicationService } from '../../core/services/medication.service';
     MatNativeDateModule,
   ],
   templateUrl: './medications.html',
-  styleUrl: './medications.scss',
+  styleUrls: ['./medications.scss'],
 })
 export class MedicationsComponent {
   private readonly fb = inject(FormBuilder);
