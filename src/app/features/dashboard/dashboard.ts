@@ -75,18 +75,45 @@ export class DashboardComponent implements OnInit {
     },
     {
       icon: '💊',
-      title: 'Recomendaciones',
-      description: 'Recibe recomendaciones personalizadas para tu salud',
+      title: 'Medicación',
+      description: 'Recibe recordatorios inteligentes para tus medicamentos',
     },
     {
-      icon: '📊',
+      icon: '📄',
       title: 'Historial Clínico',
-      description: 'Accede a todo tu historial médico desde cualquier lugar',
+      description: 'Accede a tus documentos médicos siempre que los necesites',
     },
     {
       icon: '🧠',
       title: 'Salud Mental',
-      description: 'Soporte profesional para tu bienestar mental',
+      description: 'Encuentra apoyo emocional y evalúa tu bienestar',
+    },
+  ];
+
+  healthStats = [
+    {
+      icon: '📅',
+      label: 'Citas esta semana',
+      value: '2',
+      trend: 'Confirmadas',
+    },
+    {
+      icon: '💊',
+      label: 'Medicamentos activos',
+      value: '3',
+      trend: '1 pendiente hoy',
+    },
+    {
+      icon: '📈',
+      label: 'Adherencia semanal',
+      value: '87%',
+      trend: '+5% vs ayer',
+    },
+    {
+      icon: '📄',
+      label: 'Documentos subidos',
+      value: '12',
+      trend: 'Último 19 abr',
     },
   ];
 

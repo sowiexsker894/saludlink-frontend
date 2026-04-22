@@ -5,9 +5,10 @@ import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './header.html',
-  styleUrl: './header.scss',
+  styleUrls: ['./header.scss'],
 })
 export class HeaderComponent {
   private authService = inject(AuthService);

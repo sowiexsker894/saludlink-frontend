@@ -1,132 +1,189 @@
-<div class="dashboard-container">
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="hero-content">
-      <h1 class="hero-title">Tu salud, siempre conectada</h1>
-      <p class="hero-subtitle">
-        Agenda citas, sigue tu tratamiento y cuida tu bienestar desde un solo lugar
+<div class="dashboard-page">
+  <section class="hero-panel">
+    <div class="hero-copy">
+      <span class="eyebrow">Plataforma de salud digital</span>
+      <h1>Tu salud, siempre conectada</h1>
+      <p>
+        Agenda citas, sigue tu tratamiento y cuida tu bienestar desde un solo lugar.
       </p>
-      <div class="hero-buttons">
-        <a routerLink="/appointments" class="btn btn-primary">Agendar cita</a>
-        <button class="btn btn-secondary" onclick="document.querySelector('.contact-section')?.scrollIntoView({behavior: 'smooth'})">
-          Dejame saber
-        </button>
+      <div class="hero-actions">
+        <a routerLink="/appointments" class="btn btn-primary">Empieza gratis</a>
+        <a routerLink="/dashboard" class="btn btn-secondary">Ver demo →</a>
+      </div>
+      <div class="hero-features">
+        <div>
+          <strong>Gestión de Citas</strong>
+          <p>Agenda con especialistas sin filas ni llamadas.</p>
+        </div>
+        <div>
+          <strong>Recordatorios</strong>
+          <p>Alertas inteligentes para tu medicación diaria.</p>
+        </div>
+        <div>
+          <strong>Historial Clínico</strong>
+          <p>Tus documentos médicos siempre disponibles.</p>
+        </div>
+        <div>
+          <strong>Salud Mental</strong>
+          <p>Apoyo emocional cuando más lo necesitas.</p>
+        </div>
       </div>
     </div>
-    <div class="hero-image">
-      <div class="health-icon">🏥</div>
-    </div>
-  </section>
 
-  <!-- Services Section -->
-  <section class="services-section">
-    <h2>Todo lo que necesitas para tu salud</h2>
-    <div class="services-grid">
-      <div *ngFor="let service of services" class="service-card">
-        <div class="service-icon">{{ service.icon }}</div>
-        <h3>{{ service.title }}</h3>
-        <p>{{ service.description }}</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Upcoming Appointments Section -->
-  <section class="appointments-section">
-    <div class="section-header">
-      <h2>Tus próximas citas</h2>
-      <a routerLink="/appointments" class="link-more">Ver todas →</a>
-    </div>
-
-    <div *ngIf="appointmentsLoading" class="loading-state">
-      <p>Cargando citas...</p>
-    </div>
-
-    <div *ngIf="appointmentsError && !appointmentsLoading" class="error-state">
-      <p>Error al cargar citas. Por favor, intenta nuevamente.</p>
-    </div>
-
-    <div *ngIf="!appointmentsLoading && !appointmentsError" class="appointments-list">
-      <div *ngIf="upcomingAppointments.length > 0; else noAppointments">
-        <div *ngFor="let apt of upcomingAppointments" class="appointment-card">
-          <div class="appointment-info">
-            <h4>{{ apt.doctorName }}</h4>
-            <p class="specialty">{{ apt.specialty }}</p>
-            <p class="date-time">📅 {{ formatDate(apt.appointmentDate) }}</p>
-            <p class="modality">{{ apt.modality === 'PRESENCIAL' ? '🏥 Presencial' : '💻 Virtual' }}</p>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <span>Paciente</span>
+          <span class="badge">Activo</span>
+        </div>
+        <div class="hero-card-body">
+          <div class="summary-row">
+            <div>
+              <span>2</span>
+              <p>Citas esta semana</p>
+            </div>
+            <div>
+              <span>87%</span>
+              <p>Adherencia semanal</p>
+            </div>
           </div>
-          <div class="appointment-status" [ngClass]="'status-' + apt.status.toLowerCase()">
-            {{ apt.status }}
+          <div class="next-appointment">
+            <p>Próxima cita</p>
+            <strong>Dr. Fernando Olivares</strong>
+            <span>Medicina General · Virtual</span>
+            <span>Mié 24 Abr · 10:30 AM</span>
+          </div>
+          <div class="quick-links">
+            <a routerLink="/appointments">Mis Citas</a>
+            <a routerLink="/medications">Medicación</a>
+            <a routerLink="/profile">Historial</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="feature-cards">
+    <div class="feature-card">
+      <h3>Próximas citas</h3>
+      <p>Consulta rápida y fácil tus citas programadas.</p>
+      <div class="card-actions">
+        <a routerLink="/appointments" class="link-more">Ver todas</a>
+      </div>
+    </div>
+    <div class="feature-card">
+      <h3>Medicamentos hoy</h3>
+      <p>Controla tus dosis y recibe recordatorios inteligentes.</p>
+      <div class="card-actions">
+        <a routerLink="/medications" class="link-more">Gestionar</a>
+      </div>
+    </div>
+    <div class="feature-card">
+      <h3>Historial clínico</h3>
+      <p>Accede a tus documentos médicos y pruebas en cualquier momento.</p>
+      <div class="card-actions">
+        <a routerLink="/profile" class="link-more">Ver historial</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-section">
+    <div class="stats-grid">
+      <div *ngFor="let stat of healthStats" class="stat-card">
+        <div class="stat-icon">{{ stat.icon }}</div>
+        <div>
+          <p>{{ stat.label }}</p>
+          <strong>{{ stat.value }}</strong>
+        </div>
+        <span class="stat-trend">{{ stat.trend }}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="cards-grid">
+    <div class="dashboard-card appointments-card">
+      <div class="card-header">
+        <h3>Próximas citas</h3>
+        <a routerLink="/appointments" class="link-more">Ver todas →</a>
+      </div>
+
+      <div *ngIf="appointmentsLoading" class="loading-state">
+        Cargando citas...
+      </div>
+      <div *ngIf="appointmentsError && !appointmentsLoading" class="error-state">
+        Error al cargar citas.
+      </div>
+
+      <div *ngIf="!appointmentsLoading && !appointmentsError">
+        <div *ngIf="upcomingAppointments.length > 0; else noAppointments" class="appointments-list">
+          <div *ngFor="let apt of upcomingAppointments" class="appointment-row">
+            <div>
+              <strong>{{ apt.doctorName }}</strong>
+              <p>{{ apt.specialty }} · {{ apt.modality === 'PRESENCIAL' ? 'Presencial' : 'Virtual' }}</p>
+            </div>
+            <div>
+              <p>{{ formatDate(apt.appointmentDate) }}</p>
+              <span class="status-pill" [ngClass]="apt.status.toLowerCase()">{{ apt.status }}</span>
+            </div>
           </div>
         </div>
       </div>
 
       <ng-template #noAppointments>
-        <div class="empty-state">
-          <p>No tienes citas próximas</p>
-          <a routerLink="/appointments/nueva" class="btn btn-primary">Agendar una cita</a>
+        <div class="empty-card">
+          <p>No hay citas próximas.</p>
+          <a routerLink="/appointments/nueva" class="btn btn-primary">Agendar cita</a>
         </div>
       </ng-template>
     </div>
-  </section>
 
-  <!-- Active Medications Section -->
-  <section class="medications-section">
-    <div class="section-header">
-      <h2>Tus medicamentos activos</h2>
-      <a routerLink="/medications" class="link-more">Gestionar →</a>
-    </div>
+    <div class="dashboard-card meds-card">
+      <div class="card-header">
+        <h3>Medicación hoy</h3>
+        <a routerLink="/medications" class="link-more">Gestionar →</a>
+      </div>
 
-    <div *ngIf="medicationsLoading" class="loading-state">
-      <p>Cargando medicamentos...</p>
-    </div>
+      <div *ngIf="medicationsLoading" class="loading-state">
+        Cargando medicamentos...
+      </div>
+      <div *ngIf="medicationsError && !medicationsLoading" class="error-state">
+        Error al cargar medicamentos.
+      </div>
 
-    <div *ngIf="medicationsError && !medicationsLoading" class="error-state">
-      <p>Error al cargar medicamentos. Por favor, intenta nuevamente.</p>
-    </div>
-
-    <div *ngIf="!medicationsLoading && !medicationsError" class="medications-list">
-      <div *ngIf="activeMedications.length > 0; else noMedications">
-        <div *ngFor="let med of activeMedications.slice(0, 3)" class="medication-card">
-          <div class="med-info">
-            <h4>{{ med.name }}</h4>
-            <p class="dosage">💊 {{ med.dosage }}</p>
-            <p class="frequency">⏰ {{ med.frequency }}</p>
-            <p class="dates">{{ formatDate(med.startDate) }} - {{ formatDate(med.endDate) }}</p>
+      <div *ngIf="!medicationsLoading && !medicationsError">
+        <div *ngIf="activeMedications.length > 0; else noMeds" class="med-list">
+          <div *ngFor="let med of activeMedications.slice(0, 3)" class="med-row">
+            <div>
+              <strong>{{ med.name }}</strong>
+              <p>{{ med.dosage }} · {{ med.frequency }}</p>
+            </div>
+            <span>{{ formatDate(med.startDate) }}</span>
           </div>
         </div>
       </div>
 
-      <ng-template #noMedications>
-        <div class="empty-state">
-          <p>No tienes medicamentos activos</p>
+      <ng-template #noMeds>
+        <div class="empty-card">
+          <p>No tienes medicación activa.</p>
         </div>
       </ng-template>
     </div>
   </section>
 
-  <!-- Plans Section -->
-  <section class="plans-section">
-    <h2>Elige el plan ideal para ti</h2>
+  <section id="plans" class="pricing-section">
+    <div class="section-title">
+      <h2>Elige el plan ideal para ti</h2>
+      <p>Planes para pacientes y clínicas con herramientas de coordinación.</p>
+    </div>
+
     <div class="plans-grid">
-      <div *ngFor="let plan of plans" class="plan-card" [class.highlighted]="plan.highlighted">
-        <div class="plan-header">
-          <div class="plan-icon">{{ plan.icon }}</div>
-          <h3>{{ plan.name }}</h3>
-        </div>
-
-        <div class="plan-price">
-          <span class="price-value">{{ plan.price }}</span>
-          <span class="price-currency">€</span>
-          <span class="price-period">/mes</span>
-        </div>
-
-        <ul class="plan-features">
-          <li *ngFor="let feature of plan.features">
-            <span class="feature-icon">✓</span>
-            {{ feature }}
-          </li>
+      <div *ngFor="let plan of plans" class="plan-card" [class.featured]="plan.highlighted">
+        <div class="plan-badge" *ngIf="plan.highlighted">Más Popular</div>
+        <h3>{{ plan.name }}</h3>
+        <p class="plan-price">S/. {{ plan.price }} <span>/mes</span></p>
+        <ul>
+          <li *ngFor="let feature of plan.features">{{ feature }}</li>
         </ul>
-
         <button class="btn" [ngClass]="plan.highlighted ? 'btn-primary' : 'btn-secondary'">
           {{ plan.cta }}
         </button>
@@ -134,83 +191,45 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
-  <section class="contact-section">
-    <h2>¿Tienes alguna pregunta?</h2>
-    <div class="contact-container">
-      <form [formGroup]="contactForm" (ngSubmit)="onContactSubmit()" class="contact-form">
-        <div class="form-group">
-          <input
-            type="text"
-            placeholder="Nombre completo"
-            formControlName="name"
-            class="form-input"
-            required
-          />
-          <small *ngIf="contactForm.get('name')?.hasError('required') && contactForm.get('name')?.touched"
-            >El nombre es requerido</small
-          >
-        </div>
+  <section id="contact" class="contact-section">
+    <div class="contact-layout">
+      <div class="contact-form-card">
+        <h2>¿Tienes alguna pregunta?</h2>
+        <form [formGroup]="contactForm" (ngSubmit)="onContactSubmit()">
+          <div class="form-row">
+            <input type="text" formControlName="name" placeholder="Nombre completo" class="form-input" />
+            <input type="email" formControlName="email" placeholder="Correo electrónico" class="form-input" />
+          </div>
+          <textarea formControlName="message" rows="5" placeholder="Mensaje" class="form-input"></textarea>
+          <button type="submit" class="btn btn-primary" [disabled]="contactForm.invalid || contactSubmitting">
+            {{ contactSubmitting ? 'Enviando...' : 'Enviar mensaje' }}
+          </button>
+        </form>
+      </div>
 
-        <div class="form-group">
-          <input
-            type="email"
-            placeholder="Correo electrónico"
-            formControlName="email"
-            class="form-input"
-            required
-          />
-          <small *ngIf="contactForm.get('email')?.hasError('required') && contactForm.get('email')?.touched"
-            >El correo es requerido</small
-          >
-          <small *ngIf="contactForm.get('email')?.hasError('email') && contactForm.get('email')?.touched"
-            >El correo no es válido</small
-          >
+      <div class="contact-info-card">
+        <h3>Contacto</h3>
+        <p>Estamos listos para ayudarte con tu bienestar.</p>
+        <div class="info-item">
+          <span>📧</span>
+          <div>
+            <strong>Email</strong>
+            <p>contacto@saludlink.es</p>
+          </div>
         </div>
-
-        <div class="form-group">
-          <textarea
-            placeholder="Tu mensaje"
-            formControlName="message"
-            class="form-input form-textarea"
-            rows="4"
-            required
-          ></textarea>
-          <small *ngIf="contactForm.get('message')?.hasError('required') && contactForm.get('message')?.touched"
-            >El mensaje es requerido</small
-          >
+        <div class="info-item">
+          <span>📍</span>
+          <div>
+            <strong>Ubicación</strong>
+            <p>Lima, Perú</p>
+          </div>
         </div>
-
-        <button
-          type="submit"
-          class="btn btn-primary"
-          [disabled]="contactForm.invalid || contactSubmitting"
-        >
-          {{ contactSubmitting ? 'Enviando...' : 'Enviar consulta' }}
-        </button>
-      </form>
-
-      <div class="contact-info">
-        <div class="contact-item">
-          <span class="contact-icon">📧</span>
-          <p>
-            <strong>Email</strong><br />
-            contacto@saludlink.es
-          </p>
-        </div>
-        <div class="contact-item">
-          <span class="contact-icon">📱</span>
-          <p>
-            <strong>Teléfono</strong><br />
-            +34 XXX XXX XXX
-          </p>
-        </div>
-        <div class="contact-item">
-          <span class="contact-icon">⏰</span>
-          <p>
-            <strong>Horario</strong><br />
-            Lun-Vie 9:00 - 19:00
-          </p>
+        <div class="info-item">
+          <span>📞</span>
+          <div>
+            <strong>Teléfono</strong>
+            <p>+51 999 888 777</p>
+          </div>
         </div>
       </div>
     </div>

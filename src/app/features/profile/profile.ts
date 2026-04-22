@@ -16,7 +16,7 @@ import { MedicalDocumentsComponent } from '../medical-documents/medical-document
     MedicalDocumentsComponent,
   ],
   templateUrl: './profile.html',
-  styleUrl: './profile.scss',
+  styleUrls: ['./profile.scss'],
 })
 export class ProfileComponent implements OnInit {
   selectedTab = 0;

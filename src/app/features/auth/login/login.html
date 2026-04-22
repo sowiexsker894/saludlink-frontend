@@ -1,83 +1,94 @@
-<div class="auth-container">
-  <div class="auth-card">
-    <div class="auth-header">
-      <h1>Iniciar sesión</h1>
-      <p>Ingresa a tu cuenta de SaludLink</p>
-    </div>
-
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
-      <!-- Error Message -->
-      <div *ngIf="errorMessage" class="error-message">
-        {{ errorMessage }}
-      </div>
-
-      <!-- Email Input -->
-      <div class="form-group">
-        <label for="email">Correo electrónico</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="tu@email.com"
-          formControlName="email"
-          class="form-input"
-          [class.error]="
-            loginForm.get('email')?.hasError('required') &&
-            loginForm.get('email')?.touched
-          "
-        />
-        <small *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched"
-          >El correo es requerido</small
-        >
-        <small *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched"
-          >Ingresa un correo válido</small
-        >
-      </div>
-
-      <!-- Password Input -->
-      <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="••••••••"
-          formControlName="password"
-          class="form-input"
-          [class.error]="
-            loginForm.get('password')?.hasError('required') &&
-            loginForm.get('password')?.touched
-          "
-        />
-        <small *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"
-          >La contraseña es requerida</small
-        >
-        <small *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched"
-          >La contraseña debe tener al menos 6 caracteres</small
-        >
-      </div>
-
-      <!-- Submit Button -->
-      <button
-        type="submit"
-        class="btn btn-primary"
-        [disabled]="loginForm.invalid || isLoading"
-      >
-        {{ isLoading ? 'Iniciando sesión...' : 'Iniciar sesión' }}
-      </button>
-    </form>
-
-    <!-- Register Link -->
-    <div class="auth-footer">
+<div class="auth-page">
+  <div class="auth-panel">
+    <aside class="auth-hero">
+      <span class="eyebrow">SaludLink</span>
+      <h1>Tu salud, siempre conectada</h1>
       <p>
-        ¿No tienes cuenta?
-        <a routerLink="/register">Regístrate aquí</a>
+        Accede a tu cuenta para gestionar citas, medicación, historial clínico y alertas desde un solo lugar.
       </p>
-    </div>
 
-    <!-- Demo Credentials -->
-    <div class="demo-info">
-      <p><strong>Demo:</strong> Usa credenciales de prueba:</p>
-      <p>Email: demo@saludlink.es</p>
-      <p>Contraseña: demo123456</p>
+      <div class="hero-highlights">
+        <div class="highlight-card">
+          <strong>Gestión de citas</strong>
+          <p>Agrega y revisa tus consultas médicas rápidamente.</p>
+        </div>
+        <div class="highlight-card">
+          <strong>Recordatorios</strong>
+          <p>Mantente al día con tus medicinas y controles.</p>
+        </div>
+        <div class="highlight-card">
+          <strong>Historial clínico</strong>
+          <p>Consulta tus análisis y documentos médicos siempre.</p>
+        </div>
+        <div class="highlight-card">
+          <strong>Soporte rápido</strong>
+          <p>Atención confiable para tu bienestar digital.</p>
+        </div>
+      </div>
+    </aside>
+
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1>Iniciar sesión</h1>
+        <p>Ingresa a tu cuenta de SaludLink</p>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="tu@email.com"
+            formControlName="email"
+            class="form-input"
+            [class.error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+          />
+          <small *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">
+            El correo es requerido
+          </small>
+          <small *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched">
+            Ingresa un correo válido
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="••••••••"
+            formControlName="password"
+            class="form-input"
+            [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          />
+          <small *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+            La contraseña es requerida
+          </small>
+          <small *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched">
+            La contraseña debe tener al menos 6 caracteres
+          </small>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid || isLoading">
+          {{ isLoading ? 'Iniciando sesión...' : 'Iniciar sesión' }}
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <p>
+          ¿No tienes cuenta?
+          <a routerLink="/register">Regístrate aquí</a>
+        </p>
+      </div>
+
+      <div class="demo-info">
+        <p><strong>Demo:</strong> Usa credenciales de prueba</p>
+        <p>Email: demo@saludlink.es</p>
+        <p>Contraseña: demo123456</p>
+      </div>
     </div>
   </div>
 </div>
