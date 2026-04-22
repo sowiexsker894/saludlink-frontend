@@ -1,9 +1,12 @@
-<section class="feature form-page">
+<section class="feature form-page appointments-ui">
   <div class="form-page__top">
     <a mat-button type="button" routerLink="/appointments" class="back-link">
-      ← Volver
+      ← Volver a citas
     </a>
     <h1 class="form-page__title">Nueva cita</h1>
+    <p class="form-page__lead">
+      Elige especialidad, médico, fecha y modalidad. Las notas son opcionales.
+    </p>
   </div>
 
   @if (isLoadingMeta()) {
@@ -85,7 +88,7 @@
       <div class="form-actions">
         <button
           mat-raised-button
-          class="btn-primary-teal"
+          class="btn-sl-primary"
           type="submit"
           [disabled]="isSubmitting()"
         >

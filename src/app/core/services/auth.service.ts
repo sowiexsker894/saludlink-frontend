@@ -3,12 +3,14 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { AUTH_TOKEN_KEY, AUTH_USER_KEY } from '../constants/storage-keys';
 import { AuthResponse, LoginRequest, RegisterRequest } from '../models/auth.model';
+import { AppointmentService } from './appointment.service';
 
 const API_BASE_URL = 'http://localhost:8080/api';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
+  private readonly appointments = inject(AppointmentService);
 
   login(body: LoginRequest): Observable<AuthResponse> {
     return this.http
@@ -25,6 +27,23 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(AUTH_TOKEN_KEY);
     localStorage.removeItem(AUTH_USER_KEY);
+    this.appointments.resetDemoPatientAppointmentsCache();
+  }
+
+  /**
+   * Sesión local para desarrollo / demo cuando el backend no está disponible.
+   * Permite entrar a la app (p. ej. Citas) sin llamar a la API.
+   */
+  enterDemoSession(): void {
+    this.appointments.resetDemoPatientAppointmentsCache();
+    const demo: AuthResponse = {
+      token: 'demo-local-token',
+      email: 'demo@saludlink.local',
+      role: 'PATIENT',
+      firstName: 'Usuario',
+      lastName: 'Demo',
+    };
+    this.persistAuth(demo);
   }
 
   isLoggedIn(): boolean {
