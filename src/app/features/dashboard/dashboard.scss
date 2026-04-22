@@ -13,17 +13,19 @@
   margin: 0 auto;
   padding: 1.5rem 2rem;
   color: var(--text);
+  background-color: #edf7f4;
 }
 
 .hero-panel {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
   gap: 2rem;
-  padding: 2rem;
+  padding: 2.5rem;
   border-radius: 2rem;
-  background: linear-gradient(135deg, var(--primary), #00ad9b 100%);
+  background: linear-gradient(135deg, #00645a 0%, #009b8d 100%);
   color: white;
   margin-bottom: 2rem;
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.12);
   overflow: hidden;
 
   @media (max-width: 1080px) {
@@ -102,14 +104,15 @@
   .hero-card {
     width: 100%;
     min-height: 420px;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: #ffffff;
+    color: var(--text);
+    border: 2px solid #d8e8e5;
     border-radius: 1.8rem;
-    padding: 1.8rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    backdrop-filter: blur(12px);
+    box-shadow: 0 24px 60px rgba(1, 26, 23, 0.08);
   }
 
   .hero-card-header {
@@ -117,10 +120,11 @@
     justify-content: space-between;
     align-items: center;
     font-size: 0.95rem;
-    opacity: 0.95;
+    color: var(--muted);
 
     .badge {
-      background: rgba(255, 255, 255, 0.2);
+      background: #e8fffb;
+      color: #005d53;
       padding: 0.45rem 0.9rem;
       border-radius: 999px;
       font-weight: 600;
@@ -134,41 +138,46 @@
     margin-top: 1.5rem;
 
     div {
-      background: rgba(255, 255, 255, 0.12);
+      background: #e6f8f0;
       padding: 1rem;
       border-radius: 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      color: #000;
 
       span {
         font-size: 1.4rem;
         font-weight: 700;
+        color: #005d53;
       }
 
       p {
         margin: 0;
-        opacity: 0.95;
+        color: #000 !important;
       }
     }
   }
 
   .next-appointment {
     margin-top: 1.8rem;
-    padding: 1.4rem;
-    background: rgba(255, 255, 255, 0.16);
+    padding: 1.6rem;
+    background: #ffffff;
     border-radius: 1.4rem;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 2px solid #d8e8e5;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.05);
+    color: #000;
+
+    p,
+    strong,
+    span {
+      display: block;
+      color: #000;
+    }
 
     p {
       margin: 0 0 0.45rem;
       font-size: 0.92rem;
-      opacity: 0.9;
-    }
-
-    strong,
-    span {
-      display: block;
     }
 
     strong {
@@ -184,16 +193,17 @@
     margin-top: 1.5rem;
 
     a {
-      background: rgba(255, 255, 255, 0.16);
-      color: white;
+      background: #e5fffa;
+      color: #005d53;
       text-decoration: none;
       border-radius: 999px;
       padding: 0.8rem 1rem;
       font-size: 0.95rem;
       transition: background 0.3s ease;
+      border: 1px solid rgba(0, 93, 83, 0.16);
 
       &:hover {
-        background: rgba(255, 255, 255, 0.22);
+        background: #c7f2e8;
       }
     }
   }
@@ -218,7 +228,7 @@
 
   .feature-card {
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: 2px solid #d8e8e5;
     border-radius: 1.5rem;
     padding: 1.5rem;
     display: flex;
@@ -258,7 +268,7 @@
 
   .stat-card {
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: 2px solid #d8e8e5;
     border-radius: 1.5rem;
     padding: 1.2rem 1.3rem;
     display: grid;
@@ -298,7 +308,7 @@
 
   .dashboard-card {
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: 2px solid #d8e8e5;
     border-radius: 1.5rem;
     padding: 1.5rem;
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.04);
@@ -391,7 +401,7 @@
 
     .plan-card {
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 2px solid #d8e8e5;
       border-radius: 1.8rem;
       padding: 1.8rem;
       position: relative;
@@ -466,7 +476,7 @@
     .contact-form-card,
     .contact-info-card {
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 2px solid #d8e8e5;
       border-radius: 1.8rem;
       padding: 2rem;
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.04);
